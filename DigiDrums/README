@@ -1,0 +1,22 @@
+Build Instructions
+==================
+
+TODO: more detailed build instructions!
+
+Make sure you have the prereqs (see other demos for details).
+
+Installing OpenAL
+-----------------
+
+You need OpenAL and OpenAL Utilities (ALUT).  Run the following at the terminal:
+
+sudo apt-get install libopenal-dev libalut-dev
+
+Building DigiDrums
+------------------
+
+ln -s ../ThinRGBDemo/nestk nestk
+mkdir build && cd build
+cmake ..
+make
+bin/DigiDrums

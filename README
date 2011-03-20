@@ -1,0 +1,62 @@
+Originally a "Sound Capstone Project", taught by Bruce Hemmingway, at the University of Washington
+By Michael Sloan, Jeff Booth, Ben Ullom, Dan Gerdesmier
+
+
+Build instructions:
+
+# Install dependencies
+sudo apt-get install git-core libbluetooth-dev liblo-dev freeglut3-dev libsdl1.2-dev cmake pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev libqt4-dev libgtk2.0-dev libglew1.5-dev libgsl0-dev libglut3-dev
+
+# Install wiiuse
+git clone https://github.com/godbyk/wiiuse.git
+cd wiiuse
+mkdir build
+cd build
+cmake ../
+make -j4
+sudo make install
+
+
+# Install RGBDemo version 4:
+
+# Browse to (or newer):
+# http://sourceforge.net/projects/roboticslab/files/RGBDemo-0.4.0rc1-Source.tar.gz/download
+
+cd Downloads
+
+tar -xvf RGBDemo-0.4.0rc1-Source.tar.gz
+cd RGBDemo-0.4.0rc1-Source
+./linux_configure.sh
+cd build
+make -j4
+
+# Remove opencv so that we can install a more up to date version
+sudo apt-get remove libcv-dev 
+# install more up to date/better opencv version
+cd build/nestk/deps/opencv/
+sudo make install
+
+# symbolically link nestk
+ln -s RGBDemo/nestk DigiDrums/nestk
+
+
+# make / run
+cd DigiDrums
+./setupBuild.sh
+cd releaseBuild
+make -j12
+cd bin
+./DigiDrums
+
+## This will happen ##
+
+# "libusb couldn't open USB device /dev/bus/usb/00n/0nn: Permission denied."
+# This error is normal, and means you need to run:
+
+# sudo chmod 666 /dev/bus/usb/00n/0nn
+# sudo chmod 666 /dev/bus/usb/00n/0nn+1
+# sudo chmod 666 /dev/bus/usb/00n/0nn+2
+
+# where 0nn+1 and 0nn+2 means to actually increment the number.
+
+
