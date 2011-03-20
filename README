@@ -5,7 +5,7 @@ By Michael Sloan, Jeff Booth, Ben Ullom, Dan Gerdesmier
 Build instructions:
 
 # Install dependencies
-sudo apt-get install git-core libbluetooth-dev liblo-dev freeglut3-dev libsdl1.2-dev cmake pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev libqt4-dev libgtk2.0-dev libglew1.5-dev libgsl0-dev libglut3-dev
+sudo apt-get install git-core libbluetooth-dev liblo-dev freeglut3-dev libsdl1.2-dev cmake pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev libqt4-dev libgtk2.0-dev libglew1.5-dev libgsl0-dev libglut3-dev libopenal-dev libalut-dev
 
 # Install wiiuse
 git clone https://github.com/godbyk/wiiuse.git

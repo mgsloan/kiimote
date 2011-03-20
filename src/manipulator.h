@@ -3,13 +3,13 @@
 
 #include <opencv2/core/core.hpp>
 
-class IAccel  { virtual cv::Point3f getAccel() = 0; }
-class IPos    { virtual cv::Point3f getPos() = 0; }
+class IAccel  { virtual cv::Point3f getAccel() = 0; };
+class IPos    { virtual cv::Point3f getPos() = 0; };
 
 class IButton {
   virtual bool pressed(int ix) = 0;
   virtual int buttonCount() = 0;
-}
+};
 
 // 6-DOF manipulator with button info. Forwards to underlying
 // implementation.
@@ -24,6 +24,6 @@ class Manipulator : public IAccel, public IPos, public IButton {
   virtual cv::Point3f getPos();
   virtual bool pressed(int ix);
   virtual int buttonCount();
-}
+};
 
 #endif
