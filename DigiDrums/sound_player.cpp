@@ -157,8 +157,8 @@ void OpenALSoundPlayer::playSound(const int instrument, const int sound, const f
   alSourcei(source, AL_BUFFER, sounds[instrument][sound * sff->countLevels() + play_level]);
   alSourcef(source, AL_GAIN, play_level / (sff->countLevels() - 1.0f));
   alSourcePlay(source);
-  const char* _path = "/drum/play";
-  lo_send(addr(lo_address_new(10.0.7.27, 6666)), _path, "iif", instument, sound, loudness);
+  //const char* _path = "/drum/play";
+  //lo_send(addr(lo_address_new(10.0.7.27, 6666)), _path, "iif", instument, sound, loudness);
 
 }
 

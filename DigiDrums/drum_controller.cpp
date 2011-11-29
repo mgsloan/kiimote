@@ -40,7 +40,7 @@ void DrumSetController::onHeadMove(cv::Point3f position) {
   cv::Point3f old = undulate->history[0];
   old *= 0.5;
   undulate->history.insert(undulate->history.begin(), old);
-  recorder->recordFrame();
+  //recorder->recordFrame();
 }
 
 void DrumSetController::onStickLeave(int stick) {
@@ -147,10 +147,10 @@ void DrumSetController::onButtonPress(int stick, int button, bool release) {
     if (drumix >= 0 && prev != drumix) {
       onStickHit(stick, 0.8);
       prev = drumix;
-      //player->playSound(drum_set->instrument, drum_set->drums[drumix]->sound, 1.0);
-      //sticks->vibrateStick(stick);
+      player->playSound(drum_set->instrument, drum_set->drums[drumix]->sound, 1.0);
+      sticks->vibrateStick(stick);
     }
-  } else if (button == WIIMOTE_BUTTON_HOME) {
+  } /* else if (button == WIIMOTE_BUTTON_HOME) {
     if (!recorder) {
       float dur = -1;
       if (clones.size() > 0) {
@@ -162,4 +162,5 @@ void DrumSetController::onButtonPress(int stick, int button, bool release) {
     }
     recorder->recordFrame();
   }
+  */
 }
