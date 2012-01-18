@@ -10,14 +10,29 @@
 
 vector<Wiimote> wiimotes;
 
-class Wiimote : IAccel, IButton {
-  wiimote_t wm;
+#define MAX_wii_motes 2
+
+class WiiMote {
+public:
+//protected:
+  wiimote_t* t;
+  WiiMote(wiimote_t* wm) : t(wm) {}
+
+//public:
   virtual cv::Point3f getAccel();
   virtual bool button(int ix);
 };
 
-class WiiThread : QThread {
-  virtual void run();
+class WiiManager {
+public:
+//protected:
+  wiimote_t** wii_mote_ts;
+  vector<WiiMote> wii_motes;
+//public:  
+  WiiManager();
+  ~WiiManager();
+  unsigned search();
+  bool poll();
 };
 
 #endif

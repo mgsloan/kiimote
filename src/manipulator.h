@@ -1,29 +1,25 @@
 #ifndef MANIPULATOR_H
 #define MANIPULATOR_H
 
-#include <opencv2/core/core.hpp>
+// Forward declaration of App for pointer.
+class App;
 
-class IAccel  { virtual cv::Point3f getAccel() = 0; };
-class IPos    { virtual cv::Point3f getPos() = 0; };
+class Manipulator {
+public:
+//protected:
+  bool isRed;
+  int wiiIx;
 
-class IButton {
-  virtual bool pressed(int ix) = 0;
-  virtual int buttonCount() = 0;
+  cv::Point3f pos;
+  cv::Point3f orient;
+  cv::Point3f color;
+
+//public:
+  Manipulator(bool red, int wii);
+
+  void draw();
+  void update(App* app);
+  cv::Point3f getTip();
 };
 
-// 6-DOF manipulator with button info. Forwards to underlying
-// implementation.
-class Manipulator : public IAccel, public IPos, public IButton {
-  IAccel* accel;
-  IPos* pos;
-  IButton* button;
-
-  Manipulator(IAccel* a, IPos* p, IButton* b);
-
-  virtual cv::Point3f getAccel();
-  virtual cv::Point3f getPos();
-  virtual bool pressed(int ix);
-  virtual int buttonCount();
-};
-
-#endif
+#endif //MANIPULATOR_H
