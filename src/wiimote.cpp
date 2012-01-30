@@ -1,24 +1,26 @@
 #include "wiimote.h"
 
+#include "utils.h"
+
 cv::Point3f WiiMote::getAccel() {
   return cv::Point3_<float>(wm->gforce.x, wm->gforce.y, wm->gforce.z);
 }
 
 bool WiiMote::button(unsigned ix) {
-  return ix >= 0 && ix < 32 && (wm->btns & (1 << ix)) ? 1 : 0;
+  return ix < 32 && (wm->btns & (1 << ix)) ? 1 : 0;
 }
 
-void WiiManager::WiiManager() {
+WiiManager::WiiManager() {
   wiimote** wii_motes = wiiuse_init(MAX_wii_motes);
 }
 
-void WiiManager::~WiiManager() {
-  wiiuse_cleanup(wii_motes, MAX_wii_motes);
+WiiManager::~WiiManager() {
+  wiiuse_cleanup(wii_mote_ts, MAX_wii_motes);
 }
 
 unsigned WiiManager::search() {
   //This will return the number of actual wii_motes that are in discovery mode.
-  unsigned wii_found = wiiuse_find(wii_motes, MAX_wii_motes, 5); // 5 = time delay.
+  unsigned wii_found = wiiuse_find(wii_mote_ts, MAX_wii_motes, 5); // 5 = time delay.
   if (!wii_found) {
     printf ("No wii_motes found.");
     return 0;
@@ -33,16 +35,16 @@ unsigned WiiManager::search() {
     return 0;
   }
 
-  wii_motes.clear()
-  for (int i = 0; i < wii_count; ++i) {
-    wii_motes.push_back(WiiMote(wii_mote_ts[i]);
+  wii_motes.clear();
+  for (unsigned i = 0; i < wii_count; ++i) {
+    wii_motes.push_back(WiiMote(wii_mote_ts[i]));
   }
 
   /*
    *    Now set the LEDs and rumble for a second so it's easy
    *    to tell which wii_motes are connected (just like the wii does).
    */
-  for (unsigned i = 0; i < min(4, wii_count); i++)
+  for (unsigned i = 0; i < std::min(4u, wii_count); i++)
     wiiuse_set_leds(wii_mote_ts[i], WIIMOTE_LED_1 * (1 << i));
 
   for (unsigned i = 0; i < wii_count; i++) {
@@ -60,7 +62,7 @@ unsigned WiiManager::search() {
 bool WiiManager::poll() {
   if (wii_motes.size() == 0) return false;
   if (wiiuse_poll(wii_mote_ts, wii_motes.size())) {
-    for (; i < wii_motes.size(); ++i) {
+    for (unsigned i = 0; i < wii_motes.size(); ++i) {
       if (wii_mote_ts[i]->event == WIIUSE_UNEXPECTED_DISCONNECT ||
           wii_mote_ts[i]->event == WIIUSE_DISCONNECT)
         return false;

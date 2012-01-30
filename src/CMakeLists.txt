@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 2.6.2 FATAL_ERROR)
 project(DigiDrums)
 
 ADD_SUBDIRECTORY(nestk)
-INCLUDE("${nestk_BINARY_DIR}/UseNestk.cmake")
+INCLUDE("${nestk_BINARY_DIR}/UseEmbeddedNestk.cmake")
 
 #ADD_DEFINITIONS(-DOSC_SOUND_PLAYER)
 

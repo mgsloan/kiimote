@@ -8,26 +8,24 @@
 
 #include "manipulator.h"
 
-vector<Wiimote> wiimotes;
-
-#define MAX_wii_motes 2
-
 class WiiMote {
 public:
 //protected:
-  wiimote_t* t;
-  WiiMote(wiimote_t* wm) : t(wm) {}
+  wiimote_t* wm;
+  WiiMote(wiimote_t* p) : wm(p) {}
 
 //public:
   virtual cv::Point3f getAccel();
-  virtual bool button(int ix);
+  virtual bool button(unsigned ix);
 };
+
+#define MAX_wii_motes 2
 
 class WiiManager {
 public:
 //protected:
   wiimote_t** wii_mote_ts;
-  vector<WiiMote> wii_motes;
+  std::vector<WiiMote> wii_motes;
 //public:  
   WiiManager();
   ~WiiManager();

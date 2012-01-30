@@ -1,16 +1,14 @@
+#include "kinect.h"
+
 #include "tracker.h"
 
-#include <ntk/ntk.h>
-#include <ntk/core.h>
 #include <ntk/mesh/rgbd_modeler.h>
-#include <ntk/mesh/mesh_generator.h>
-#include <ntk/camera/calibration.h>
-#include <ntk/camera/rgbd_image.h>
-#include <ntk/camera/rgbd_grabber.h>
-#include <ntk/camera/kinect_grabber.h>
 
 Kinect::Kinect(const char* calibration_file)
-  : do_near_clip(true)
+  : red(20, PointMetric(), 1, 4)
+  , green(20, PointMetric(), 1, 4)
+  , head(80, PointMetric(), -1, 1)
+  , do_near_clip(true)
   , do_tracking(true)
   , do_calibration(true)
   {
@@ -33,7 +31,7 @@ Kinect::Kinect(const char* calibration_file)
   grabber.start();
 }
 
-void Kinect::handleAsyncEvent() {
+void Kinect::handleAsyncEvent(ntk::EventListener::Event e) {
   grabber.copyImageTo(last_image);
   processor.processImage(last_image);
 
@@ -50,7 +48,7 @@ void Kinect::handleAsyncEvent() {
   generator->generate(last_image);
   generated_mesh = generator->mesh();
 
-  if (do_tracking)
+  if (do_tracking) {
     cv::Point3f fudge(0,0,-0.1);
 
     cv::Point3f hp, rp, gp;

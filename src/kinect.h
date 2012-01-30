@@ -1,6 +1,9 @@
 #ifndef KINECT_H
 #define KINECT_H
 
+#include "smooth_filter.h"
+#include "tracker.h"
+
 #include <ntk/ntk.h>
 #include <ntk/core.h>
 
@@ -10,7 +13,8 @@
 #include <ntk/camera/calibration.h>
 #include <ntk/camera/rgbd_image.h>
 #include <ntk/camera/rgbd_grabber.h>
-#include <ntk/camera/kinect_grabber.h>
+#include <ntk/camera/freenect_grabber.h>
+// #include <ntk/camera/kinect_grabber.h>
 
 #include <ntk/thread/event.h>
 
@@ -40,7 +44,7 @@ public:
   Kinect(const char* calibration_file);
 
   // Handle a grabber event.
-  void handleAsyncEvent();
+  void handleAsyncEvent(ntk::EventListener::Event e);
 };
 
 #endif // KINECT_H

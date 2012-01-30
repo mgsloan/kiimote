@@ -1,6 +1,8 @@
 #ifndef MANIPULATOR_H
 #define MANIPULATOR_H
 
+#include <opencv2/core/core.hpp>
+
 // Forward declaration of App for pointer.
 class App;
 

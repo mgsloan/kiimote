@@ -1,5 +1,9 @@
 #include "manipulator.h"
 
+#include "app.h"
+
+#include <QVector2D>
+
 Manipulator::Manipulator(bool red, int wii) : isRed(red), wiiIx(wii) {
   color = isRed ? cv::Point3f(1,0,0) : cv::Point3f(0,1,0);
 }
@@ -12,7 +16,7 @@ void Manipulator::draw() {
       glLineWidth(4.0);
       glBegin( GL_LINES );
       glVertex3f( pos.x, pos.y, pos.z );
-      cv::Point3f tip = sticks[i].getTip();
+      cv::Point3f tip = getTip();
       glVertex3f( tip.x, tip.y, tip.z );
       glEnd();
       glLineWidth(1.0);
@@ -22,16 +26,16 @@ void Manipulator::draw() {
 
 void Manipulator::update(App* app) {
   if (wiiIx < app->wii.wii_motes.size())
-    orient = app->wii.wii_motes[wiiIx];
+    orient = app->wii.wii_motes[wiiIx].getAccel();
 
   if (app->kinect)
-    pos = isRed ? app->kinect->red  ->computeValue()
-                : app->kinect->green->computeValue();
+    pos = isRed ? app->kinect->red  .computeValue()
+                : app->kinect->green.computeValue();
 }
 
 cv::Point3f Manipulator::getTip() {
   cv::Point3f ret = ret;
-  ret *= -2.0 / mag(ret);
+  ret *= -2.0 / sqrt(ret.dot(ret));
   ret.z = -ret.z;
   ret += pos;
   return ret;

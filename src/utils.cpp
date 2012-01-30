@@ -16,7 +16,7 @@ void transformMesh(ntk::Mesh& mesh,
                    a31, a32, a33, a34,
                    0, 0, 0, 1};
 
-  cv::Mat transform(4, 4, CV_32F, &elems);
+  cv::Mat_<float> transform(4, 4, elems);
   ntk::Pose3D pose;
   pose.setCameraTransform(transform);
   mesh.applyTransform(pose);

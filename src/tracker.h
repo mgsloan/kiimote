@@ -7,7 +7,7 @@
 
 class ColorProfile {
  public:
-  vector<cv::Vec3b> colors;
+  std::vector<cv::Vec3b> colors;
   cv::Vec3f mean;
   cv::Vec3f deviation;
   void addColor(cv::Vec3b color);

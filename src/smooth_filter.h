@@ -2,6 +2,7 @@
 #define SMOOTH_FILTER_H
 
 #include <list>
+#include <opencv2/core/core.hpp>
 #include <vector>
 
 using namespace std;

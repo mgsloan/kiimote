@@ -1,6 +1,9 @@
 #ifndef APP_H
 #define APP_H
 
+#define GLEW_STATIC
+#include <GL/glew.h>
+
 #include "viewer.h"
 #include "kinect.h"
 #include "wiimote.h"

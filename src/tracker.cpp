@@ -26,11 +26,11 @@ cv::Vec3f fromB(cv::Vec3b vec) {
   return cv::Vec3f(vec[0], vec[1], vec[2]);
 }
 
-void ColorProfile :: addColor(cv::Vec3b color) {
+void ColorProfile::addColor(cv::Vec3b color) {
   colors.push_back(color);
 }
 
-void ColorProfile :: calculateStatistics() {
+void ColorProfile::calculateStatistics() {
   cv::Vec3f sum(0, 0, 0);
   for (int i = 0; i < colors.size(); i++)
     sum += colors[i];

@@ -1,6 +1,10 @@
 #ifndef VIEWER_H
 #define VIEWER_H
 
+#include <opencv2/core/core.hpp>
+#include <QApplication>
+#include <QGLWidget>
+
 // Forward declaration of App for pointer.
 class App;
 
@@ -33,6 +37,10 @@ public:
   cv::Point3f look_at;
   int samples_a, samples_b;
   cv::Point3f color_a, color_b;
+
+  GLdouble proj_matrix[16], modelview_matrix[16];
+  GLint viewport[4];
+  QSize size;
 
 //public:
   void paintGL();

@@ -1,5 +1,6 @@
 #include "app.h"
 
+
 using namespace std;
 
 // Command-line options
@@ -10,6 +11,7 @@ namespace opt
 
 App::App(int argc, char* argv[])
   : QApplication(argc, argv)
+  , window(this)
   , kinect(NULL)
   , red(true, 0), green(false, 1) {
   QApplication::setGraphicsSystem("raster");
@@ -17,8 +19,9 @@ App::App(int argc, char* argv[])
   // Parse command-line arguments
   ntk::arg_parse(argc, argv);
   no_kinect = opt::no_kinect();
+}
 
-int App::run() {}
+int App::run() {
   // Initialize OpenGL
   GLenum err = glewInit();
   if (GLEW_OK == err) {
