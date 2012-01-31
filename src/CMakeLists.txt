@@ -71,7 +71,7 @@ source_group("Generated Sources - Do Not Edit" FILES ${GENERATED_SOURCES})
 include_directories("${CMAKE_BINARY_DIR}")
 
 # Build the app!
-add_executable(kiimote
+add_executable(bin/kiimote
      WIN32
      # source files that are actually built direclty
      ${SOURCES}
@@ -84,5 +84,4 @@ add_executable(kiimote
      ${RESOURCES})
 
 # Link the app!
-target_link_libraries(kiimote ${QT_LIBRARIES} GLU glew wiiuse nestk lo)
-
+target_link_libraries(bin/kiimote ${QT_LIBRARIES} GLU glew wiiuse nestk lo)
