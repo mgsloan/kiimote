@@ -13,6 +13,7 @@
 #include <ntk/camera/calibration.h>
 #include <ntk/camera/rgbd_image.h>
 #include <ntk/camera/rgbd_grabber.h>
+//#include <ntk/camera/openni_grabber.h>
 #include <ntk/camera/freenect_grabber.h>
 // #include <ntk/camera/kinect_grabber.h>
 

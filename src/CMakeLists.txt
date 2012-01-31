@@ -27,6 +27,7 @@ include(${QT_USE_FILE})
 set(SOURCES
      app.cpp
      kinect.cpp
+     main.cpp
      manipulator.cpp
      tracker.cpp
      utils.cpp
@@ -83,4 +84,5 @@ add_executable(kiimote
      ${RESOURCES})
 
 # Link the app!
-target_link_libraries(kiimote ${QT_LIBRARIES} GLU glew wiiuse nestk openal lo)
+target_link_libraries(kiimote ${QT_LIBRARIES} GLU glew wiiuse nestk lo)
+
