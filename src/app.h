@@ -23,6 +23,7 @@ public:
   Manipulator red, green;
 
   bool no_kinect;
+  bool no_wii;
 
 //public:
   App(int argc, char* argv[]);

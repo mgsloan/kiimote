@@ -32,6 +32,8 @@ int App::run() {
     kinect = new Kinect("../../kinect_calibration.yml");
   }
 
+  no_wii = !wii.search();
+
   glViewport(0,0,640,480);
   window.show();
 
@@ -44,7 +46,7 @@ int App::run() {
 }
 
 void App::update() {
-  if (wii.poll() || wii.search()) {
+  if (!no_wii && wii.poll()) {
     red.update(this);
     green.update(this);
   }

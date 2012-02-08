@@ -27,6 +27,7 @@ public:
   ntk::RGBDCalibration calib_data;
   ntk::MeshGenerator* generator;
 
+  bool has_data;
   ntk::RGBDImage last_image;
   ntk::Mesh bg_mesh;
   ntk::Mesh generated_mesh;

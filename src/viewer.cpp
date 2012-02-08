@@ -47,12 +47,13 @@ void draw_points(const ntk::Mesh& mesh, double scale, double alpha) {
   glMatrixMode(GL_MODELVIEW);
   glPushMatrix();
   glScalef( scale, scale, scale );
+  /*
   glPointSize(10.0);
   glPointParameterf(GL_POINT_SIZE_MIN, 1.0);
   glPointParameterf(GL_POINT_SIZE_MAX, 10.0);
   float acoeffs[] = {1.0, -1.0, 0.0};
   glPointParameterfv( GL_POINT_DISTANCE_ATTENUATION, acoeffs);
-
+*/
   glBegin(GL_POINTS);
   for (int i = 0; i < mesh.vertices.size(); ++i)
   {
@@ -140,9 +141,10 @@ void Viewer::paintGL() {
   glClearAccum(0.0, 0.0, 0.0, 0.0);
 
   // Draw the Kinect mesh
-  if (app->kinect) {
+  if (app->kinect && app->kinect->has_data) {
     ntk::Mesh& mesh = app->kinect->generated_mesh,
                bgmesh = app->kinect->bg_mesh;
+    printf("drawing points %i \n", mesh.vertices.size());
     glDisable(GL_LIGHTING);
     glDisable(GL_TEXTURE_2D);
     draw_points(mesh, 10, 1);

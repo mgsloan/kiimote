@@ -8,6 +8,7 @@ Kinect::Kinect(const char* calibration_file)
   : red(20, PointMetric(), 1, 4)
   , green(20, PointMetric(), 1, 4)
   , head(80, PointMetric(), -1, 1)
+  , has_data(false)
   , do_near_clip(true)
   , do_tracking(true)
   , do_calibration(true)
@@ -47,6 +48,7 @@ void Kinect::handleAsyncEvent(ntk::EventListener::Event e) {
 
   generator->generate(last_image);
   generated_mesh = generator->mesh();
+  has_data = true;
 
   if (do_tracking) {
     cv::Point3f fudge(0,0,-0.1);

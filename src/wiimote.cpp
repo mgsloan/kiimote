@@ -11,7 +11,7 @@ bool WiiMote::button(unsigned ix) {
 }
 
 WiiManager::WiiManager() {
-  wiimote** wii_motes = wiiuse_init(MAX_wii_motes);
+  wii_mote_ts = wiiuse_init(MAX_wii_motes);
 }
 
 WiiManager::~WiiManager() {
