@@ -92,7 +92,7 @@ cd kiimote/src
 cp -r ../../rgbdemo/nestk .
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Release -DNESTK_USE_OPENNI:BOOL=OFF ..
+cmake -DCMAKE_BUILD_TYPE=Release -DNESTK_USE_OPENNI:BOOL=OFF -DNESTK_USE_FREENECT:BOOL=ON ..
 make -j9
 
 

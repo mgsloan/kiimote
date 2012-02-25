@@ -12,9 +12,6 @@ project(DigiDrums)
 ADD_SUBDIRECTORY(nestk)
 INCLUDE("${nestk_BINARY_DIR}/UseEmbeddedNestk.cmake")
 
-#ADD_DEFINITIONS(-DOSC_SOUND_PLAYER)
-
-
 ###
 # Perform build configuration of dependencies
 
