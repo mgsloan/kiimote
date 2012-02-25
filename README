@@ -1,52 +1,110 @@
 Originally a "Sound Capstone Project", taught by Bruce Hemmingway, at the University of Washington
 By Michael Sloan, Jeff Booth, Ben Ullom, Dan Gerdesmier
 
+Cleaned up to become kiimote source by Michael Sloan
 
-Build instructions:
+Build instructions (ubuntu):
 
-# Install dependencies
-sudo apt-get install git-core libbluetooth-dev liblo-dev freeglut3-dev libsdl1.2-dev cmake pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev libqt4-dev libgtk2.0-dev libglew1.5-dev libgsl0-dev libglut3-dev libopenal-dev libalut-dev
+Stable versions of some of these packages might work, but once I encountered resistance, I went for trunk versions:
+
+# Get version control / essentials
+sudo apt-get install git subversion cmake vim
+
+# Install PCL trunk
+svn co http://svn.pointclouds.org/pcl/trunk pcl
+cd pcl
+
+sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl
+sudo apt-get update
+sudo apt-get install libeigen3-dev libflann1.7-dev
+
+sudo apt-get install libboost-all-dev libvtk5-qt4-dev
+
+# Uncomment line 73
+vim proctor/src/frame_hough_proposer.cpp
+  73Gxx:wq
+
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release .. 
+make -j9
+sudo make install
+cd ../../
+
+
+# Install libfreenect trunk
+sudo apt-get install freeglut3-dev libxmu-dev libxi-dev libusb-1.0-0-dev
+
+git clone https://github.com/OpenKinect/libfreenect
+cd libfreenect
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make -j9
+sudo make install
+cd ../../
+
+
+# Install OpenCV
+sudo add-apt-repository ppa:gijzelaar/cuda
+sudo add-apt-repository ppa:gijzelaar/opencv2.3
+sudo apt-get update
+sudo apt-get install libopencv-dev
+
+
+# Try building RGBDemo trunk
+sudo apt-get install libqhull-dev
+
+git clone https://github.com/nburrus/rgbdemo
+cd rgbdemo
+git submodule update --init nestk
+
+# fix opencv paths
+cd nestk/ntk
+find ./ -type f -exec sed -i ‘s|opencv/highgui.h|opencv2/highgui/highgui.hpp|’ {} \;
+cd ../
+
+# I had some problems with the OpenNI drivers (< 1 FPS, but work)
+# so I disabled their usage in the build configuration.
+
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DNESTK_USE_OPENNI:BOOL=OFF ..
+make -j9
+
 
 # Install wiiuse
+sudo apt-get install libbluetooth-dev
 git clone https://github.com/godbyk/wiiuse.git
 cd wiiuse
 mkdir build
 cd build
-cmake ../
-make -j4
+cmake ..
+make -j9
 sudo make install
 
+# Install liblo
+sudo apt-get install liblo-dev
 
-# Install RGBDemo version 4:
-
-# Browse to (or newer):
-# http://sourceforge.net/projects/roboticslab/files/RGBDemo-0.4.0rc1-Source.tar.gz/download
-
-cd Downloads
-
-tar -xvf RGBDemo-0.4.0rc1-Source.tar.gz
-cd RGBDemo-0.4.0rc1-Source
-./linux_configure.sh
+# Once that works and tests, build kiimote:
+git clone https://github.com/mgsloan/kiimote
+cd kiimote/src
+cp -r ../../rgbdemo/nestk .
+mkdir build
 cd build
-make -j4
-
-# Remove opencv so that we can install a more up to date version
-sudo apt-get remove libcv-dev 
-# install more up to date/better opencv version
-cd build/nestk/deps/opencv/
-sudo make install
-
-# symbolically link nestk
-ln -s RGBDemo/nestk DigiDrums/nestk
+cmake -DCMAKE_BUILD_TYPE=Release -DNESTK_USE_OPENNI:BOOL=OFF ..
+make -j9
 
 
-# make / run
-cd DigiDrums
-./setupBuild.sh
-cd releaseBuild
-make -j12
-cd bin
-./DigiDrums
+Under ubuntu 11.11, gphoto drivers take over the device.  This might cause
+libfreenect to not be able to access it.  To see if this is the case, try the
+following command after plugging the Kinect in (it's loaded on demand).
+
+rmmod gspca_kinect
+
+If this fixes the problem, add "blacklist gspca_kinect" to 
+/etc/modprobe.de/blacklist.conf in order to make the fix permanent
+
 
 ## This will happen ##
 
@@ -58,5 +116,4 @@ cd bin
 # sudo chmod 666 /dev/bus/usb/00n/0nn+2
 
 # where 0nn+1 and 0nn+2 means to actually increment the number.
-
 

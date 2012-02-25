@@ -19,7 +19,7 @@ INCLUDE("${nestk_BINARY_DIR}/UseEmbeddedNestk.cmake")
 # Perform build configuration of dependencies
 
 # Set up QT4 and required components
-find_package(Qt4 COMPONENTS QtCore QtGui QtOpenGL Qt3D REQUIRED)
+find_package(Qt4 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)
 include(${QT_USE_FILE})
 
 ###
